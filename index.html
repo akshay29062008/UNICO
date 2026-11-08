@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNICO - All in one store | Multi-Platform Deals</title>
+  
+  <!-- Favicon using the UNICO golden logo -->
+  <link rel="icon" type="image/jpeg" href="assets/images/unico-logo.jpg">
+  <link rel="apple-touch-icon" href="assets/images/unico-logo.jpg">
+
+  <!-- Meta & SEO Tags -->
+  <meta name="description" content="Discover handpicked deals across Fashion, Household Essentials, DIY Tools, and Tech from Amazon, Flipkart, Myntra, Etsy, and more. White, Gold & Black Luxury Experience.">
+  <meta name="keywords" content="unico deals, bargains, fashion sale, household discounts, DIY tools sale, best online deals, amazon deals, myntra coupons">
+  <meta property="og:title" content="UNICO - All in one store">
+  <meta property="og:description" content="Handpicked, verified bargains across Fashion, Household, DIY & more with instant coupon codes.">
+  <meta property="og:image" content="assets/images/unico-logo.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Tailwind CSS CDN with darkMode: 'class' enabled -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#d4af37',
+              'gold-light': '#fef3c7',
+              'gold-dark': '#996515',
+              black: '#0a0a0b',
+              charcoal: '#17171a',
+              ivory: '#faf9f6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#faf9f6] text-neutral-900 min-h-screen flex flex-col antialiased">
+
+  <!-- Top Navigation with Language Selector & Dark Mode on the Left -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-200/60 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- LEFT TOP: Language Option & Dark/Light Mode Switcher -->
+        <div class="flex items-center space-x-2.5">
+          
+          <!-- Language Selector Dropdown -->
+          <div class="flex items-center space-x-1.5 bg-white dark:bg-stone-900 border border-amber-300/70 dark:border-amber-400/50 rounded-xl px-2.5 py-1.5 shadow-xs transition-colors">
+            <i class="fas fa-globe text-amber-500 text-xs"></i>
+            <select 
+              id="languageSelect" 
+              onchange="setLanguage(this.value)" 
+              class="bg-transparent text-neutral-900 dark:text-neutral-100 font-bold text-xs focus:outline-none cursor-pointer pr-1"
+              title="Select Language"
+            >
+              <option value="en" class="bg-white dark:bg-stone-900 text-neutral-900 dark:text-white">🇺🇸 English</option>
+              <option value="es" class="bg-white dark:bg-stone-900 text-neutral-900 dark:text-white">🇪🇸 Español</option>
+              <option value="fr" class="bg-white dark:bg-stone-900 text-neutral-900 dark:text-white">🇫🇷 Français</option>
+              <option value="de" class="bg-white dark:bg-stone-900 text-neutral-900 dark:text-white">🇩🇪 Deutsch</option>
+              <option value="hi" class="bg-white dark:bg-stone-900 text-neutral-900 dark:text-white">🇮🇳 हिन्दी</option>
+            </select>
+          </div>
+
+          <!-- Dark / Light Mode Toggle Button -->
+          <button 
+            id="themeToggleBtn" 
+            onclick="toggleTheme()" 
+            class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/70 dark:border-amber-400/50 text-neutral-900 dark:text-neutral-100 hover:border-amber-400 transition-all shadow-xs text-xs font-bold"
+            title="Toggle Dark / Light Mode"
+          >
+            <i id="themeMoonIcon" class="fas fa-moon text-stone-700 text-xs"></i>
+            <i id="themeSunIcon" class="fas fa-sun text-amber-400 text-xs hidden"></i>
+            <span id="themeText" class="text-[11px] font-bold">Dark</span>
+          </button>
+
+        </div>
+
+        <!-- RIGHT TOP: Wishlist & Settings -->
+        <div class="flex items-center space-x-2.5">
+          <!-- Wishlist / Saved Deals Button -->
+          <button 
+            onclick="openWishlistDrawer()"
+            class="relative w-9 h-9 flex items-center justify-center rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 text-neutral-900 dark:text-neutral-100 hover:text-amber-600 transition-colors shadow-xs"
+            title="Saved Deals"
+            aria-label="Saved Deals"
+          >
+            <i class="far fa-heart text-sm text-stone-800 dark:text-stone-200"></i>
+            <span 
+              id="wishlistCountBadge" 
+              class="hidden absolute -top-1 -right-1 bg-black text-amber-300 border border-amber-400 font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow"
+            >0</span>
+          </button>
+
+          <!-- Settings Button -->
+          <button 
+            onclick="openAdminModal()"
+            class="w-9 h-9 flex items-center justify-center rounded-xl bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black transition-all border border-amber-400/60 shadow-xs group"
+            title="Settings & Products"
+            aria-label="Settings"
+          >
+            <i class="fas fa-cog text-amber-400 group-hover:text-black text-sm group-hover:rotate-90 transition-transform duration-300"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- Big Centered Logo & Search Hero Section (Pure White Canvas Behind Logo) -->
+    <section class="hero-canvas text-center pt-8 pb-10 space-y-8 bg-white rounded-3xl border border-amber-200/70 shadow-sm p-6 sm:p-10 transition-colors">
+      
+      <!-- Big Centered Logo on Pure White Background -->
+      <div class="flex justify-center">
+        <div class="relative group cursor-pointer inline-block" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <div class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-300/80 bg-white p-3 gold-shadow transition-transform duration-500 group-hover:scale-102">
+            <img 
+              src="assets/images/unico-logo.jpg" 
+              alt="UNICO Golden Logo" 
+              class="w-full h-full object-contain rounded-2xl bg-white" 
+            />
+          </div>
+          <!-- Sub-badge: All in one store -->
+          <div class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 bg-neutral-950 text-amber-300 text-xs font-black tracking-widest uppercase px-4 py-1 rounded-full border border-amber-400/70 shadow-lg whitespace-nowrap">
+            <span id="storeBadgeText">All in one store</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tagline -->
+      <div class="max-w-xl mx-auto space-y-1 pt-2">
+        <p id="heroTagline" class="text-sm sm:text-base text-stone-700 dark:text-stone-300 font-semibold">
+          Handpicked deals across Fashion, Household, DIY & Tech from top global stores.
+        </p>
+      </div>
+
+      <!-- Prominent Search Bar DIRECTLY BELOW THE LOGO -->
+      <div class="max-w-2xl mx-auto w-full px-2">
+        <div class="search-container relative flex items-center bg-white rounded-2xl border-2 border-amber-400 shadow-lg gold-shadow-sm transition-all focus-within:ring-4 focus-within:ring-amber-300/20 focus-within:border-amber-500 p-1.5">
+          <span class="pl-3.5 pr-2 text-amber-600 text-base">
+            <i class="fas fa-search"></i>
+          </span>
+          <input 
+            type="text" 
+            id="dealSearchInput"
+            placeholder="Search products, brands, stores (e.g. vacuum, hoodie, drill)..." 
+            class="flex-1 py-2.5 px-2 bg-transparent text-neutral-900 dark:text-white placeholder-stone-400 focus:outline-none text-sm font-medium"
+          />
+          <button 
+            id="clearSearchBtn" 
+            class="hidden px-2 text-stone-400 hover:text-black dark:hover:text-white transition-colors"
+            title="Clear search"
+          >
+            <i class="fas fa-times-circle text-base"></i>
+          </button>
+          <button 
+            onclick="applyFiltersAndRender()"
+            class="px-5 py-2.5 rounded-xl bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black font-black text-xs transition-all shadow-sm border border-amber-400/50 flex-shrink-0"
+          >
+            <span id="searchBtnText">Search Deals</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Smart Filter Badges below search bar -->
+      <div class="flex items-center justify-center space-x-2 overflow-x-auto pb-1 scrollbar-none max-w-2xl mx-auto px-2">
+        <button onclick="setQuickFilter('all')" data-filter="all" class="quick-filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-stone-800 shadow-xs border border-stone-200">
+          All Deals
+        </button>
+        <button onclick="setQuickFilter('50-off')" data-filter="50-off" class="quick-filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-stone-800 shadow-xs border border-stone-200">
+          ⚡ 50%+ Discount
+        </button>
+        <button onclick="setQuickFilter('with-coupon')" data-filter="with-coupon" class="quick-filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-stone-800 shadow-xs border border-stone-200">
+          🎟️ With Coupon
+        </button>
+        <button onclick="setQuickFilter('under-50')" data-filter="under-50" class="quick-filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-stone-800 shadow-xs border border-stone-200">
+          💎 Under $50
+        </button>
+        <button onclick="setQuickFilter('top-rated')" data-filter="top-rated" class="quick-filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-stone-800 shadow-xs border border-stone-200">
+          ⭐ Top Rated (4.8+)
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Deal of the Day Spotlight -->
+    <div id="heroFeaturedDeal"></div>
+
+    <!-- Categories & Filter Section -->
+    <section class="space-y-4 pt-2">
+      
+      <!-- Category Filter Pills -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-black uppercase tracking-wider text-neutral-900 dark:text-white flex items-center space-x-2">
+            <i class="fas fa-th-large text-amber-500"></i>
+            <span id="browseCategoriesHeader">Browse Categories</span>
+          </h3>
+          <span class="text-xs text-stone-400">Click to filter</span>
+        </div>
+        <div id="categoryPills" class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none"></div>
+      </div>
+
+      <!-- Store Filters & Sorting Bar -->
+      <div class="filter-bar-panel flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-amber-300/40 shadow-sm transition-colors">
+        
+        <!-- Platform Store Filter -->
+        <div class="flex items-center space-x-2 overflow-x-auto">
+          <span class="text-xs font-black uppercase tracking-wider text-amber-800 dark:text-amber-400 flex-shrink-0 mr-1">Store:</span>
+          <div id="platformFilterContainer" class="flex items-center space-x-1.5 flex-nowrap"></div>
+        </div>
+
+        <!-- Sort by Selector -->
+        <div class="flex items-center space-x-3 flex-shrink-0 self-end md:self-auto">
+          <span id="dealsCountDisplay" class="text-xs font-medium text-stone-500"></span>
+          
+          <div class="flex items-center space-x-2">
+            <label id="sortLabel" for="sortSelect" class="text-xs font-bold text-neutral-900 dark:text-neutral-200">Sort By:</label>
+            <select 
+              id="sortSelect"
+              class="text-xs font-bold py-1.5 px-3 rounded-xl bg-white dark:bg-stone-900 text-neutral-900 dark:text-white border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500"
+            >
+              <option value="featured">Featured Deals</option>
+              <option value="discount">Highest Discount %</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Top Customer Rating</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Active Filter Chips Container -->
+      <div id="activeFilterChips" class="hidden"></div>
+
+      <!-- Deals Grid Container -->
+      <div id="dealsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+      <!-- Empty State View -->
+      <div id="emptyState" class="hidden text-center py-16 px-4 bg-white dark:bg-stone-900 rounded-3xl border border-dashed border-amber-300 dark:border-amber-400/40">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-50 dark:bg-stone-800 flex items-center justify-center text-amber-500 text-2xl border border-amber-200 dark:border-amber-400/30">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3 class="text-base font-bold text-neutral-950 dark:text-white">No deals match your search criteria</h3>
+        <p class="text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto mt-1 mb-6">
+          Try clearing your search query or switching store filters.
+        </p>
+        <button 
+          onclick="resetFilters()"
+          class="px-5 py-2.5 rounded-xl bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black font-bold text-xs shadow-md transition-all border border-amber-400/50"
+        >
+          Reset All Filters
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Email Alerts & Deal Drops Newsletter -->
+    <section class="rounded-3xl bg-neutral-950 text-white p-8 md:p-10 shadow-xl relative overflow-hidden border-2 border-amber-400/60">
+      <div class="relative z-10 max-w-2xl mx-auto text-center space-y-4">
+        <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-400/10 text-amber-300 border border-amber-400/40">
+          <i class="fas fa-bell text-amber-400"></i>
+          <span>PRICE DROP ALERTS</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-black tracking-tight font-serif-luxury text-amber-100">
+          Get Instant 50%+ Clearance Alerts
+        </h3>
+        <p class="text-xs sm:text-sm text-stone-300 max-w-lg mx-auto leading-relaxed">
+          Subscribe to get notified about genuine flash discounts and price markdowns across Amazon, Flipkart, Myntra & Etsy.
+        </p>
+
+        <form id="newsletterForm" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto pt-2">
+          <input 
+            type="email" 
+            id="newsletterEmail"
+            required
+            placeholder="Enter your email address..." 
+            class="flex-1 px-4 py-3 rounded-xl bg-white text-neutral-900 placeholder-stone-400 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-amber-400"
+          />
+          <button 
+            type="submit"
+            class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-black font-black text-xs shadow-lg transition-transform active:scale-95 flex items-center justify-center space-x-1.5"
+          >
+            <span>Get Alerts</span>
+            <i class="fas fa-paper-plane text-[10px]"></i>
+          </button>
+        </form>
+
+        <p class="text-[10px] text-stone-400">
+          Zero spam. Unsubscribe at any time with one click.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer (White & Gold with Centered Logo & All in one store) -->
+  <footer class="bg-white border-t border-amber-300/40 text-stone-600 text-xs py-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Brand Summary -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <img src="assets/images/unico-logo.jpg" alt="UNICO" class="w-10 h-10 rounded-xl object-cover border border-amber-400 shadow-xs" />
+            <div>
+              <span class="text-lg font-black text-neutral-950 dark:text-white font-serif-brand block">UNICO</span>
+              <span class="text-[9px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-widest">All in one store</span>
+            </div>
+          </div>
+          <p class="text-xs leading-relaxed text-stone-500">
+            A single platform for curated multi-store discounts. Connecting consumers with certified deals from world-class marketplaces.
+          </p>
+          <div class="flex items-center space-x-3 pt-2 text-stone-400">
+            <a href="#" class="hover:text-amber-600"><i class="fab fa-twitter text-base"></i></a>
+            <a href="#" class="hover:text-amber-600"><i class="fab fa-instagram text-base"></i></a>
+            <a href="#" class="hover:text-amber-600"><i class="fab fa-telegram text-base"></i></a>
+            <a href="#" class="hover:text-amber-600"><i class="fab fa-facebook text-base"></i></a>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div>
+          <h5 class="text-xs font-black uppercase tracking-wider text-neutral-950 dark:text-white mb-3">Categories</h5>
+          <ul class="space-y-2 text-stone-600 dark:text-stone-400">
+            <li><a href="javascript:void(0)" onclick="setCategory('fashion')" class="hover:text-amber-700 dark:hover:text-amber-400">Fashion & Apparel</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('household')" class="hover:text-amber-700 dark:hover:text-amber-400">Household & Living</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('diy')" class="hover:text-amber-700 dark:hover:text-amber-400">DIY Tools & Crafting</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('tech')" class="hover:text-amber-700 dark:hover:text-amber-400">Tech & Gadgets</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('beauty')" class="hover:text-amber-700 dark:hover:text-amber-400">Beauty & Wellness</a></li>
+          </ul>
+        </div>
+
+        <!-- Partner Stores -->
+        <div>
+          <h5 class="text-xs font-black uppercase tracking-wider text-neutral-950 dark:text-white mb-3">Partner Marketplaces</h5>
+          <ul class="space-y-2 text-stone-600 dark:text-stone-400">
+            <li><a href="javascript:void(0)" onclick="setPlatform('Amazon')" class="hover:text-amber-700 dark:hover:text-amber-400"><i class="fab fa-amazon text-[11px] mr-1 text-amber-600"></i> Amazon Deals</a></li>
+            <li><a href="javascript:void(0)" onclick="setPlatform('Flipkart')" class="hover:text-amber-700 dark:hover:text-amber-400"><i class="fas fa-shopping-bag text-[11px] mr-1 text-amber-600"></i> Flipkart Deals</a></li>
+            <li><a href="javascript:void(0)" onclick="setPlatform('Myntra')" class="hover:text-amber-700 dark:hover:text-amber-400"><i class="fas fa-tshirt text-[11px] mr-1 text-amber-600"></i> Myntra Fashion</a></li>
+            <li><a href="javascript:void(0)" onclick="setPlatform('Etsy')" class="hover:text-amber-700 dark:hover:text-amber-400"><i class="fab fa-etsy text-[11px] mr-1 text-amber-600"></i> Etsy Handcrafted</a></li>
+            <li><a href="javascript:void(0)" onclick="setPlatform('AliExpress')" class="hover:text-amber-700 dark:hover:text-amber-400"><i class="fas fa-globe text-[11px] mr-1 text-amber-600"></i> AliExpress Tech</a></li>
+          </ul>
+        </div>
+
+        <!-- Curator Portal -->
+        <div>
+          <h5 class="text-xs font-black uppercase tracking-wider text-neutral-950 dark:text-white mb-3">Curator Controls</h5>
+          <p class="text-xs text-stone-500 mb-3">
+            Add customized affiliate links, update prices, or export product databases.
+          </p>
+          <button 
+            onclick="openAdminModal()" 
+            class="px-4 py-2 rounded-xl bg-neutral-950 text-amber-300 font-black text-xs hover:bg-amber-400 hover:text-black transition-colors flex items-center space-x-2 border border-amber-400/50"
+          >
+            <i class="fas fa-cog text-xs text-amber-400"></i>
+            <span>Curator Portal</span>
+          </button>
+          <div class="mt-3 text-[11px] text-stone-500">
+            Total Affiliate Clicks: <strong id="totalClicksCount" class="text-neutral-950 dark:text-white font-bold">0</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Legal Disclosure & Copyright -->
+      <div class="pt-8 border-t border-amber-200/60 dark:border-amber-400/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px]">
+        <p class="text-stone-500">
+          &copy; 2026 UNICO - All in one store. All rights reserved.
+        </p>
+        <p class="text-stone-400 max-w-xl text-center md:text-right">
+          <strong>Affiliate Disclosure:</strong> UNICO participates in various affiliate programs and may earn commissions on qualified purchases through partner store links at zero extra cost to you.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Quick View Modal Backdrop -->
+  <div id="dealModal" class="modal-backdrop fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div id="dealModalContent" class="w-full flex justify-center"></div>
+  </div>
+
+  <!-- Wishlist Slide-in Drawer -->
+  <div id="wishlistDrawer" class="modal-backdrop fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end hidden">
+    <div class="w-full max-w-md bg-white dark:bg-stone-900 h-full p-6 flex flex-col justify-between shadow-2xl modal-content border-l border-amber-300">
+      
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-amber-200 dark:border-amber-400/30">
+          <div class="flex items-center space-x-2">
+            <i class="far fa-heart text-amber-600"></i>
+            <h3 class="text-base font-black text-neutral-950 dark:text-white font-serif-luxury">Your Saved Deals</h3>
+          </div>
+          <button onclick="closeWishlistDrawer()" class="text-stone-400 hover:text-black dark:hover:text-white text-sm">
+            <i class="fas fa-times text-lg"></i>
+          </button>
+        </div>
+
+        <div id="wishlistItemsContainer" class="mt-4 space-y-3 overflow-y-auto max-h-[calc(100vh-180px)] pr-1"></div>
+      </div>
+
+      <div class="pt-4 border-t border-amber-200 dark:border-amber-400/30">
+        <button 
+          onclick="closeWishlistDrawer()"
+          class="w-full py-2.5 rounded-xl bg-neutral-950 text-amber-300 font-black text-xs hover:bg-amber-400 hover:text-black transition-colors border border-amber-400/40"
+        >
+          Continue Browsing
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Admin / Curator Portal Modal -->
+  <div id="adminModal" class="modal-backdrop fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-stone-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl border-2 border-amber-400/60 modal-content">
+      
+      <!-- Modal Header with Logo -->
+      <div class="flex items-center justify-between pb-4 border-b border-amber-200 dark:border-amber-400/30">
+        <div class="flex items-center space-x-3">
+          <img src="assets/images/unico-logo.jpg" alt="UNICO Logo" class="w-10 h-10 rounded-xl object-cover border border-amber-400 shadow-xs" />
+          <div>
+            <h3 class="text-lg font-black text-neutral-950 dark:text-white font-serif-luxury">UNICO Curator & Control Panel</h3>
+            <p class="text-xs text-stone-500">Manage affiliate links, add new deals, or export database</p>
+          </div>
+        </div>
+        <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:text-black dark:hover:text-white flex items-center justify-center">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Authentication Section -->
+      <div id="adminAuthSection" class="py-12 text-center max-w-sm mx-auto space-y-4">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-50 dark:bg-stone-800 border border-amber-300 dark:border-amber-400/40 flex items-center justify-center text-amber-600 text-2xl">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div>
+          <h4 class="text-base font-bold text-neutral-950 dark:text-white">Curator Passcode Verification</h4>
+          <p class="text-xs text-stone-500 mt-1">Enter your curator password to access management controls.</p>
+        </div>
+        <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+          <input 
+            type="password" 
+            id="adminPasscode"
+            placeholder="Enter passcode..." 
+            class="w-full text-center tracking-widest text-base font-mono px-4 py-2.5 rounded-xl border border-amber-300 dark:border-amber-400/40 bg-stone-50 dark:bg-stone-800 focus:outline-none focus:border-amber-500 text-neutral-950 dark:text-white"
+          />
+          <button 
+            type="submit"
+            class="w-full py-2.5 rounded-xl bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black font-black text-xs shadow-md transition-all border border-amber-400/50"
+          >
+            Unlock Curator Portal
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard Section -->
+      <div id="adminDashboardSection" class="hidden pt-6 space-y-8">
+        
+        <!-- Action Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-amber-50/50 dark:bg-stone-800/60 rounded-2xl border border-amber-300/50 dark:border-amber-400/30 text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-neutral-950 dark:text-white">Curated Deals:</span>
+            <span id="adminTotalDealsCount" class="font-black text-neutral-950 bg-amber-300 px-2.5 py-0.5 rounded-full border border-amber-400">16</span>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <button 
+              onclick="exportDealsJSON()"
+              class="px-3 py-1.5 rounded-lg bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black font-bold transition-colors flex items-center space-x-1 border border-amber-400/40"
+            >
+              <i class="fas fa-download text-[10px]"></i>
+              <span>Export deals.json</span>
+            </button>
+
+            <label class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-black transition-colors cursor-pointer flex items-center space-x-1">
+              <i class="fas fa-upload text-[10px]"></i>
+              <span>Import JSON</span>
+              <input type="file" accept=".json" onchange="handleImportJSON(event)" class="hidden" />
+            </label>
+
+            <button 
+              onclick="resetToDefaultDeals()"
+              class="px-3 py-1.5 rounded-lg bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-200 hover:text-red-600 font-bold transition-colors"
+            >
+              Reset Defaults
+            </button>
+
+            <button 
+              onclick="handleAdminLogout()"
+              class="px-3 py-1.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-500 hover:text-black dark:hover:text-white font-bold transition-colors"
+            >
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Add / Edit Deal Form -->
+        <div class="bg-stone-50 dark:bg-stone-800/50 p-5 rounded-2xl border border-amber-200 dark:border-amber-400/30">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="text-sm font-black text-neutral-950 dark:text-white flex items-center space-x-1.5 font-serif-luxury">
+              <i class="fas fa-tag text-amber-500"></i>
+              <span>Add / Edit Deal</span>
+            </h4>
+            <button id="cancelEditBtn" onclick="cancelEdit()" class="hidden text-xs text-red-500 font-bold hover:underline">
+              Cancel Editing
+            </button>
+          </div>
+
+          <form id="dealForm" onsubmit="handleDealFormSubmit(event)" class="space-y-4 text-xs">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Deal Title *</label>
+                <input 
+                  type="text" 
+                  id="dealFormTitle" 
+                  required 
+                  placeholder="e.g. 20V Brushless Cordless Drill Kit" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Category *</label>
+                <select 
+                  id="dealFormCategory" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 font-semibold text-neutral-900 dark:text-white"
+                >
+                  <option value="fashion">Fashion & Apparel</option>
+                  <option value="household">Household & Home Living</option>
+                  <option value="diy">DIY & Tools</option>
+                  <option value="tech">Tech & Gadgets</option>
+                  <option value="beauty">Beauty & Wellness</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Platform / Store *</label>
+                <select 
+                  id="dealFormPlatform" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 font-semibold text-neutral-900 dark:text-white"
+                >
+                  <option value="Amazon">Amazon</option>
+                  <option value="Flipkart">Flipkart</option>
+                  <option value="Myntra">Myntra</option>
+                  <option value="Etsy">Etsy</option>
+                  <option value="AliExpress">AliExpress</option>
+                  <option value="Walmart">Walmart</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Original Price ($) *</label>
+                  <input 
+                    type="number" 
+                    step="0.01" 
+                    id="dealFormOriginalPrice" 
+                    required 
+                    placeholder="120.00" 
+                    class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Deal Price ($) *</label>
+                  <input 
+                    type="number" 
+                    step="0.01" 
+                    id="dealFormDealPrice" 
+                    required 
+                    placeholder="59.99" 
+                    class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Your Affiliate URL *</label>
+                <input 
+                  type="url" 
+                  id="dealFormAffiliateUrl" 
+                  required 
+                  placeholder="https://amazon.com/dp/B00...?tag=yourtag-20" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Product Image URL</label>
+                <input 
+                  type="url" 
+                  id="dealFormImageUrl" 
+                  placeholder="https://images.unsplash.com/..." 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Coupon Code (Optional)</label>
+                <input 
+                  type="text" 
+                  id="dealFormCouponCode" 
+                  placeholder="e.g. SAVE20" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Custom Badge (Optional)</label>
+                <input 
+                  type="text" 
+                  id="dealFormBadge" 
+                  placeholder="e.g. BEST SELLER" 
+                  class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+                />
+              </div>
+
+            </div>
+
+            <div>
+              <label class="block font-bold text-neutral-800 dark:text-neutral-200 mb-1">Short Description</label>
+              <textarea 
+                id="dealFormDescription" 
+                rows="2" 
+                placeholder="Product highlights, why this deal is exceptional..."
+                class="w-full px-3 py-2 rounded-xl bg-white dark:bg-stone-900 border border-amber-300/60 dark:border-amber-400/40 focus:outline-none focus:border-amber-500 text-neutral-900 dark:text-white"
+              ></textarea>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="dealFormHeroDeal" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400" />
+              <label for="dealFormHeroDeal" class="font-bold text-neutral-800 dark:text-neutral-200">Set as Deal of the Day (Spotlight)</label>
+            </div>
+
+            <button 
+              type="submit" 
+              id="dealFormSubmitBtn"
+              class="w-full py-3 rounded-xl bg-neutral-950 text-amber-300 hover:bg-amber-400 hover:text-black font-black text-xs shadow-md transition-all border border-amber-400/50"
+            >
+              <i class="fas fa-plus mr-1"></i> Add Deal
+            </button>
+          </form>
+        </div>
+
+        <!-- Current Deals List in Admin -->
+        <div>
+          <h4 class="text-sm font-black text-neutral-950 dark:text-white mb-3 flex items-center space-x-1.5 font-serif-luxury">
+            <i class="fas fa-list text-amber-600"></i>
+            <span>Current Live Deals</span>
+          </h4>
+          <div id="adminDealsList" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/deals-data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
